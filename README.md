@@ -6,7 +6,7 @@ In Skript, holographic leaderboards are very inefficient and laggy. Scripts typi
 SkLeaderboards is built to solve this problem. The plugin allows for simple configuration of leaderboards directly in Skript, with updating the data being fully left to the plugin. SkLeaderboard directly reads Skript variables, player statistics from data files and economy data directly from EssentialsX.
 With SkLeaderboards, the host of the holograms can also be easily edited by one line and can be different for every single leaderboard.
 > [!NOTE]
-> Supported Holgram Hosts:
-> Text Displays (Vanilla)
-> FancyHolograms
+> Supported Holgram Hosts:                                                                                                                                                                       
+> Text Displays (Vanilla)                                                                                                                                                                        
+> FancyHolograms                                                                                                                                                                                 
 > DecentHolograms
