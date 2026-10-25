@@ -1,0 +1,17 @@
+name: SkLeaderboards
+version: 1.0.0
+main: com.tank.skleaderboards.SkLeaderboards
+author: skTank
+description: A Skript addon designed to provide efficient, lag-free leaderboards with direct Skript variable and player stats support, all without placeholders.
+api-version: '1.21'
+depend: [Skript]
+softdepend: [FancyHolograms, DecentHolograms, Essentials]
+commands:
+  lb:
+    description: Create, move, delete and inspect leaderboard displays
+    usage: /lb <create|delete|move|refresh|info> <id>, or /lb list
+    permission: skleaderboards.admin
+permissions:
+  skleaderboards.admin:
+    description: Manage SkLeaderboards displays
+    default: op 
