@@ -1,7 +1,9 @@
 package com.tank.skleaderboards;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Location;
@@ -12,9 +14,8 @@ import org.bukkit.entity.TextDisplay;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 
 public final class TextDisplayHost implements HologramHost {
 
@@ -115,6 +116,9 @@ public final class TextDisplayHost implements HologramHost {
             display.setBillboard(billboardOf(definition).toBukkit());
             display.setShadowed(shadowOf(definition));
             display.setBackgroundColor(backgroundColor(backgroundOf(definition)));
+            if (definition.viewDistance() != null) {
+                display.setViewRange(viewRange(definition.viewDistance()));
+            }
             display.text(toComponent(lines));
         });
     }
@@ -137,6 +141,16 @@ public final class TextDisplayHost implements HologramHost {
         if (!Objects.equals(display.getBackgroundColor(), wantedBackground)) {
             display.setBackgroundColor(wantedBackground);
         }
+        if (definition.viewDistance() != null) {
+            float wantedRange = viewRange(definition.viewDistance());
+            if (display.getViewRange() != wantedRange) {
+                display.setViewRange(wantedRange);
+            }
+        }
+    }
+
+    private float viewRange(int blocks) {
+        return blocks / 64.0f;
     }
 
     private boolean shadowOf(LeaderboardDefinition definition) {

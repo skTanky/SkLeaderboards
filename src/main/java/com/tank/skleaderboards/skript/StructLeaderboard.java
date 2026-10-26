@@ -25,6 +25,8 @@ import org.skriptlang.skript.registration.SyntaxRegistry;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class StructLeaderboard extends Structure {
 
@@ -39,11 +41,15 @@ public class StructLeaderboard extends Structure {
     private static final String[] SHADOW = {"shadow", "text shadow"};
     private static final String[] BILLBOARD = {"billboard", "rotation", "facing"};
     private static final String[] BACKGROUND = {"background", "background colour", "background color"};
+    private static final String[] VIEW = {"view distance", "visibility distance", "render distance",
+            "view range", "range", "distance"};
 
     private static final String[] RANK_WORDS = {"first", "second", "third", "fourth", "fifth",
             "sixth", "seventh", "eighth", "ninth", "tenth"};
     private static final String[] RANK_NUMBERS = {"1st", "2nd", "3rd", "4th", "5th",
             "6th", "7th", "8th", "9th", "10th"};
+
+    private static final Pattern DISTANCE = Pattern.compile("(\\d{1,4})(?:\\s*blocks?)?");
 
     private String id;
     private LeaderboardDefinition definition;
@@ -65,6 +71,7 @@ public class StructLeaderboard extends Structure {
         for (String key : SHADOW) builder.addEntryData(booleanEntry(key));
         for (String key : BILLBOARD) builder.addEntryData(billboardEntry(key));
         for (String key : BACKGROUND) builder.addEntryData(backgroundEntry(key));
+        for (String key : VIEW) builder.addEntryData(distanceEntry(key));
 
         addon.syntaxRegistry().register(SyntaxRegistry.STRUCTURE,
                 DefaultSyntaxInfos.Structure.builder(StructLeaderboard.class)
@@ -96,6 +103,25 @@ public class StructLeaderboard extends Structure {
                     Skript.error("'" + key + "' must be descending (highest first) or ascending (lowest first).");
                 }
                 return order;
+            }
+        };
+    }
+
+    private static KeyValueEntryData<Integer> distanceEntry(String key) {
+        return new KeyValueEntryData<Integer>(key, null, true) {
+            @Override
+            protected @Nullable Integer getValue(String value) {
+                Matcher matcher = DISTANCE.matcher(value.trim().toLowerCase(Locale.ROOT));
+                if (!matcher.matches()) {
+                    Skript.error("'" + key + "' must be a number of blocks, like 48 or 48 blocks.");
+                    return null;
+                }
+                int blocks = Integer.parseInt(matcher.group(1));
+                if (blocks < 1 || blocks > 512) {
+                    Skript.error("'" + key + "' must be between 1 and 512 blocks.");
+                    return null;
+                }
+                return blocks;
             }
         };
     }
@@ -206,7 +232,7 @@ public class StructLeaderboard extends Structure {
         id = ((Literal<String>) args[0]).getSingle();
 
         if (!usesOneNamePerSetting(entryContainer, TITLE, VALUE, HOST, SIZE, ORDER, REFRESH, FORMAT, FOOTER,
-                SHADOW, BILLBOARD, BACKGROUND)) {
+                SHADOW, BILLBOARD, BACKGROUND, VIEW)) {
             return false;
         }
         for (int rank = 1; rank <= RANK_WORDS.length; rank++) {
@@ -235,6 +261,7 @@ public class StructLeaderboard extends Structure {
         Boolean shadow = readAliased(entryContainer, Boolean.class, SHADOW);
         BillboardMode billboard = readAliased(entryContainer, BillboardMode.class, BILLBOARD);
         BackgroundSetting background = readAliased(entryContainer, BackgroundSetting.class, BACKGROUND);
+        Integer viewDistance = readAliased(entryContainer, Integer.class, VIEW);
 
         Map<Integer, String> rankFormats = new HashMap<>();
         for (int rank = 1; rank <= RANK_WORDS.length; rank++) {
@@ -260,7 +287,7 @@ public class StructLeaderboard extends Structure {
         }
 
         definition = new LeaderboardDefinition(id, title, source, host, size, order, refreshTicks,
-                format, Map.copyOf(rankFormats), footer, shadow, billboard, background);
+                format, Map.copyOf(rankFormats), footer, shadow, billboard, background, viewDistance);
         return true;
     }
 

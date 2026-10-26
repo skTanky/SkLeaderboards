@@ -15,6 +15,7 @@ public record LeaderboardDefinition(
         String footer,
         Boolean shadow,
         BillboardMode billboard,
-        BackgroundSetting background
+        BackgroundSetting background,
+        Integer viewDistance
 ) {
 }

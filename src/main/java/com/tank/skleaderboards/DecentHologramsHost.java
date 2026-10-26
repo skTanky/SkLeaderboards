@@ -38,7 +38,7 @@ public final class DecentHologramsHost implements HologramHost {
             return update(linked, definition, lines);
         }
 
-        spawn(definition.id(), location, lines);
+        spawn(definition, location, lines);
         return placementAt(definition.id(), location);
     }
 
@@ -53,7 +53,7 @@ public final class DecentHologramsHost implements HologramHost {
             if (world == null) {
                 return placement;
             }
-            spawn(placement.id(), new Location(world, placement.x(), placement.y(), placement.z()), lines);
+            spawn(definition, new Location(world, placement.x(), placement.y(), placement.z()), lines);
             return placement;
         }
 
@@ -61,6 +61,7 @@ public final class DecentHologramsHost implements HologramHost {
         if (!wanted.equals(currentLines(hologram))) {
             DHAPI.setHologramLines(hologram, wanted);
         }
+        applyRange(hologram, definition);
 
         Location current = hologram.getLocation();
         if (current != null && current.getWorld() != null) {
@@ -74,7 +75,7 @@ public final class DecentHologramsHost implements HologramHost {
                           List<String> lines) {
         Hologram hologram = DHAPI.getHologram(placement.id());
         if (hologram == null) {
-            spawn(placement.id(), location, lines);
+            spawn(definition, location, lines);
             return placementAt(placement.id(), location);
         }
 
@@ -89,11 +90,19 @@ public final class DecentHologramsHost implements HologramHost {
         }
     }
 
-    private void spawn(String id, Location location, List<String> lines) {
-        if (DHAPI.getHologram(id) != null) {
+    private void spawn(LeaderboardDefinition definition, Location location, List<String> lines) {
+        if (DHAPI.getHologram(definition.id()) != null) {
             return;
         }
-        DHAPI.createHologram(id, location, true, toDecentLines(lines));
+        Hologram hologram = DHAPI.createHologram(definition.id(), location, true, toDecentLines(lines));
+        applyRange(hologram, definition);
+    }
+
+    private void applyRange(Hologram hologram, LeaderboardDefinition definition) {
+        Integer distance = definition.viewDistance();
+        if (distance != null && hologram.getDisplayRange() != distance) {
+            hologram.setDisplayRange(distance);
+        }
     }
 
     private List<String> currentLines(Hologram hologram) {

@@ -1,19 +1,20 @@
 package com.tank.skleaderboards;
 
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+
+import org.bukkit.Bukkit;
+import org.bukkit.Color;
+import org.bukkit.Location;
+import org.bukkit.World;
+
 import de.oliver.fancyholograms.api.FancyHologramsPlugin;
 import de.oliver.fancyholograms.api.HologramManager;
 import de.oliver.fancyholograms.api.data.TextHologramData;
 import de.oliver.fancyholograms.api.hologram.Hologram;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import org.bukkit.Bukkit;
-import org.bukkit.Color;
-import org.bukkit.Location;
-import org.bukkit.World;
-
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 public final class FancyHologramsHost implements HologramHost {
 
@@ -136,6 +137,11 @@ public final class FancyHologramsHost implements HologramHost {
                 data.setBackground(wanted);
                 changed = true;
             }
+        }
+
+        if (definition.viewDistance() != null && data.getVisibilityDistance() != definition.viewDistance()) {
+            data.setVisibilityDistance(definition.viewDistance());
+            changed = true;
         }
 
         return changed;
