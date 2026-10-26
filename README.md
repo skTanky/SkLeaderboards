@@ -59,6 +59,7 @@ register a new leaderboard with id "balanceLB":
     billboard: vertical
     background: none
     sort: descending
+    view distance: 20
 ```
 
 ```
