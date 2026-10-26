@@ -29,6 +29,8 @@ With SkLeaderboards, the host of the holograms can also be easily edited by one 
 2. Download the latest [Skript](https://github.com/SkriptLang/Skript/releases) release.
 3. Download your preferred optional dependancies: [FancyHolograms](https://modrinth.com/plugin/fancyholograms), [DecentHolograms](https://modrinth.com/plugin/decentholograms), [EssentialsX](https://modrinth.com/plugin/essentialsx).
 4. Drag all downloaded `.jars` into your server's `\plugins` folder and restart the server.
+5. Create a script and register a leaderboard (Example snippets below).
+6. Create the leaderboard hologram using `/lb create <id>`.
 
 ## Usage
 
