@@ -34,6 +34,22 @@ With SkLeaderboards, the host of the holograms can also be easily edited by one 
 
 ## Usage
 
+| Syntax | Aliases | Required? | Hosts | Accepted Values & Defaults |
+|---|---|---|---|---|
+| `title` | `header` | Yes | All | Quoted text. `\n` makes a new line. |
+| `value` | `variable` | Yes | All | `{list::*}`, `kills`, `deaths`, `playtime` or `balance` (requires EssentialsX). |
+| `host` | `display` | No | All | `text display` (default), `fancyholograms` or `decentholograms`. |
+| `size` | `limit`, `entries` | No | All | 1 to 100. Default 10. |
+| `order` | `sort`, `sort order` | No | All | `descending` (default) or `ascending`. |
+| `refresh` | `interval`, `refresh interval`, `update interval` | No | All | A timespan. 1 second minimum. Default 30 seconds. |
+| `format` | `line format` | No | All | Quoted. Uses `%position%`, `%name%` and `%value%`. Default `#%position% %name% - %value%`. |
+| `first format` to `tenth format` | `1st format` to `10th format` | No | All | Quoted. Overrides `format` for that one rank. |
+| `footer` | `bottom` | No | All | Quoted. `%refresh%` shows the refresh time. No footer by default. |
+| `shadow` | `text shadow` | No | **Text display and FancyHolograms** | `true` or `false`. |
+| `billboard` | `rotation`, `facing` | No | **Text display and FancyHolograms** | `fixed`, `vertical`, `horizontal` or `center`. Default `vertical` of text displays. |
+| `background` | `background colour`, `background color` | No | **Text display and FancyHolograms** | `none`, `default`, `"#RRGGBB"` or `"#RRGGBBAA"`. Default `none` on text displays. |
+| `view distance` | `visibility distance`, `render distance`, `view range`, `range`, `distance` | No | All | 1 to 512 blocks. |
+
 | Command | Description |
 |---|---|
 | `/lb create <id>` | Create a leaderboard hologram that has been registered in a script |
