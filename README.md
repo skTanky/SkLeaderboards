@@ -4,7 +4,7 @@ A Skript addon designed to provide efficient, lag-free leaderboards with direct 
 
 ## Why SkLeaderboards?
 
-In Skript, holographic leaderboards are very inefficient and laggy. Scripts typically rely on console commands that directly update a hologram. Constantly updating these holograms, especially many at a time can cause large amounts of lag on a server.
+In Skript, holographic leaderboards are very inefficient and laggy. Scripts typically rely on console commands that directly update a hologram. Constantly updating these holograms, especially many at a time can cause large amounts of lag on a server. Furthermore, the plugin only updates the hologram when a displayed value needs an update, removing useless updates that make no change and further improving efficiency.
 
 SkLeaderboards is built to solve this problem. The plugin allows for simple configuration of leaderboards directly in Skript, with updating the data being fully left to the plugin. 
 
