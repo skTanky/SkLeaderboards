@@ -95,5 +95,7 @@ register a new leaderboard with id "testLB":
 ```
 
 # Support
+[![SkriptHubViewTheDocs](https://skripthub.net/static/addon/ViewTheDocsButton.png)](https://skripthub.net/docs/?addon=SkLeaderboards)
+
 - [Discord](https://discord.gg/yv685kSTqj)
 - [GitHub Issues Tracker](https://github.com/skTanky/SkLeaderboards/issues)
